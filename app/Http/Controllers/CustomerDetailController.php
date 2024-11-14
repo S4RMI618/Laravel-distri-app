@@ -125,7 +125,7 @@ class CustomerDetailController extends Controller
         try {
             $request->validate([
                 'customers' => 'required|array',
-                'customers.*.identification' => 'required|numeric|digits:20',
+                'customers.*.identification' => 'required|numeric',
                 'customers.*.full_name' => 'required|string|max:255',
                 'customers.*.email' => 'email',
                 'customers.*.phone' => 'string',

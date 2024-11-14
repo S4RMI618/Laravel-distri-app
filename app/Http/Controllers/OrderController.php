@@ -18,10 +18,16 @@ class OrderController extends Controller
     {
         $user = Auth::user();
 
-        // Los administradores ven todas las órdenes, los distribuidores solo las suyas
-        $orders = $user->role === 'admin'
-            ? Order::latest()->get() // Ordenar por fecha de creación descendente y paginar
-            : Order::where('user_id', $user->id)->latest()->paginate(15);
+        // Los administradores ven todas las órdenes asociadas con su empresa, los distribuidores solo las suyas
+        if ($user->role_id === 1) {
+            // Si el usuario es administrador, obtener el `company_id` y filtrar las órdenes por distribuidores de la misma empresa
+            $orders = Order::whereHas('user', function ($query) use ($user) {
+                $query->where('company_id', $user->company_id);
+            })->latest()->paginate(15);
+        } else {
+            // Si es distribuidor, mostrar solo sus propias órdenes
+            $orders = Order::where('user_id', $user->id)->latest()->paginate(15);
+        }
 
         return view('orders.index', compact('orders'));
     }
@@ -280,7 +286,7 @@ class OrderController extends Controller
                     return [
                         'name' => $product->name,
                         'code' => $product->code,
-                        'base_price' => $product->base_price,
+                        'base_price_selected' => $product->pivot->price_final,
                         'tax_rate' => $product->tax_rate,
                         'company_id' => $product->company_id,
                         'quantity' => $product->pivot->quantity,

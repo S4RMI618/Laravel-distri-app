@@ -72,6 +72,7 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach ($order->products as $product)
+                                
                                     <tr>
                                         <td class="px-4 py-4 text-sm text-gray-900">
                                             {{ $product->name }} ({{ $product->code }})
