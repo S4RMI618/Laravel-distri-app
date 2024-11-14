@@ -279,7 +279,10 @@ class OrderController extends Controller
                     'identification' => $order->customer->identification,
                     'name' => $order->customer->full_name,
                 ],
-                'user' => $order->user->name,
+                'user' => [
+                    'id' => $order->user->id,
+                    'name' => $order->user->name,
+                ],
                 'status' => $order->status,
                 "total" => $order->total,
                 'products' => $order->products->map(function ($product) {
@@ -293,6 +296,7 @@ class OrderController extends Controller
                     ];
                 }),
                 'observations' => $order->observations,
+                'creation_date' => $order->created_at,
             ];
         });
 

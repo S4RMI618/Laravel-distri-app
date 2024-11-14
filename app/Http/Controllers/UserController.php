@@ -6,19 +6,31 @@ use App\Models\User;
 use App\Models\Company;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
-{
-    public function index()
+{   
+    private $user;  // Obtener el usuario autenticado
+
+    public function __construct()
     {
-        $users = User::with(['company', 'role'])->get();  // Cargar relaciones de compañía y rol
+        $this->user = Auth::user();
+    }
+    public function index()
+    {   
+        // Hacer esta lógica por si en un futuro se hace un superadmin
+        if ($this->user->role_id == 1) {
+            $users = User::with(['company', 'role']) // Cargar relaciones de compañía y rol
+            ->where('company_id', $this->user->company_id) // Solo mostrar usuarios de la misma compañía
+            ->get(); // Obtener todos los usuarios
+        } 
         return view('users.index', compact('users'));
     }
 
     public function create()
     {
-        $companies = Company::all();  // Obtener todas las compañías para el dropdown
+        $companies = Company::all();/* ->where('id', $this->user->company_id) */;  // Obtener todas las compañías para el dropdown
         $roles = Role::all();  // Obtener todos los roles
         return view('users.create', compact('companies', 'roles'));
     }
@@ -55,7 +67,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $companies = Company::all();  // Para el dropdown de compañías
+        $companies = Company::all();/* ->where('id', $this->user->company_id); */  // Para el dropdown de compañías
         $roles = Role::all();  // Para el dropdown de roles
         return view('users.edit', compact('user', 'companies', 'roles'));
     }

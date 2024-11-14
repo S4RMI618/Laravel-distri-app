@@ -5,18 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\CustomerDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerDetailController extends Controller
 {
+    private $customerDetail;
+
+    public function __construct()
+    {
+        $this->customerDetail = Auth::user();
+    }
     public function index()
     {
-        $customerDetails = CustomerDetail::with('company')->paginate(10);
+        $customerDetails = CustomerDetail::with('company')->where('company_id', $this->customerDetail->company_id)->paginate(10);
         return view('customer-details.index', compact('customerDetails'));
     }
 
     public function create()
     {
-        $companies = Company::all();
+        $companies = Company::all()->where('id', $this->customerDetail->company_id);
         return view('customer-details.create', compact('companies'));
     }
 
@@ -45,7 +52,7 @@ class CustomerDetailController extends Controller
 
     public function edit($id)
     {
-        $companies = Company::all();
+        $companies = Company::all()->where('id', $this->customerDetail->company_id);
         $customerDetail = CustomerDetail::findOrFail($id);
         return view('customer-details.edit', compact('customerDetail', 'companies'));
     }
@@ -80,9 +87,12 @@ class CustomerDetailController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-        $customers = CustomerDetail::where('full_name', 'like', "%{$query}%")
-            ->orWhere('identification', 'like', "%{$query}%")
-            ->get();
+        $customers = CustomerDetail::where('company_id', $this->customerDetail->company_id) // Filtrar por la empresa del usuario
+        ->where(function ($q) use ($query) { // Agrupar condiciones de búsqueda
+            $q->where('full_name', 'LIKE', "%{$query}%")
+              ->orWhere('identification', 'LIKE', "%{$query}%");
+        })
+        ->get();
 
         return response()->json($customers);
     }

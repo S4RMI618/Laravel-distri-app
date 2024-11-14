@@ -47,7 +47,7 @@
                     <div class="mt-4">
                         <x-input-label for="role_id" :value="__('Rol')" />
                         <select id="role_id" name="role_id"
-                            class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                            class="block mt-1 w-full p-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                             required>
                             <option value="">Selecciona un rol</option>
                             @foreach ($roles as $role)
@@ -63,7 +63,7 @@
                     <div class="mt-4">
                         <x-input-label for="company_id" :value="__('Compañía')" />
                         <select id="company_id" name="company_id"
-                            class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                            class="block mt-1 w-full p-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                             required>
                             <option value="">Selecciona una compañía</option>
                             @foreach ($companies as $company)

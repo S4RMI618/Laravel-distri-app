@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
-{
+{   
+    private $user;
+
+    public function __construct()
+    {
+        $this->user = Auth::user();
+    }
     public function createProducts($products)
     {
         foreach ($products as $product) {
@@ -43,7 +50,7 @@ class ProductController extends Controller
 
     public function getProducts()
     {
-        $products = Product::all();
+        $products = Product::all()->where('company_id', $this->user->company_id);
         return response()->json($products);
     }
 
@@ -72,16 +79,14 @@ class ProductController extends Controller
     public function searchProducts(Request $request)
     {
         $query = $request->input('query');
-        $products = Product::where('name', 'LIKE', "%{$query}%")
-            ->orWhere('code', 'LIKE', "%{$query}%")
-            ->get();
 
-/*         if ($products->isEmpty()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'No se encontraron productos.'
-            ]);
-        } */
+        $products = Product::where('company_id', $this->user->company_id) // Filtrar por la empresa del usuario
+            ->where(function ($q) use ($query) { // Agrupar condiciones de búsqueda
+                $q->where('name', 'LIKE', "%{$query}%")
+                  ->orWhere('code', 'LIKE', "%{$query}%");
+            })
+            ->get();
+    
         return response()->json($products);
     }
 }

@@ -23,6 +23,9 @@
                                 <tr>
                                     <th scope="col"
                                         class="mx-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
+                                        ID</th>
+                                    <th scope="col"
+                                        class="mx-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-1/6">
                                         Rol</th>
                                     <th scope="col"
                                         class="mx-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-1/3">
@@ -42,6 +45,9 @@
                                 @foreach ($users as $user)
                                     <tr class="hover:bg-gray-100 cursor-pointer"
                                         onclick="window.location='{{ route('users.show', $user->id) }}'">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
+                                            {{ $user->id }}
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center">
                                             {{ $user->role->name }}
                                         </td>
