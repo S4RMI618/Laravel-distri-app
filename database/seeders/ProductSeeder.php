@@ -20,8 +20,10 @@ class ProductSeeder extends Seeder
         Product::create([
             'name' => 'Producto 1',
             'code' => strtoupper($faker->lexify('???-???')),
-            'base_price' => $faker->randomFloat(2, 10000, 50000), // Precio base entre 10000 y 500000
-            'tax_rate' => $faker->randomFloat(2, 0, 19), // Tasa de impuesto entre 0% y 25%
+            'base_price_1' => $faker->randomFloat(2, 10000, 50000), // Precio base entre 10000 y 500000
+            'base_price_2' => $faker->randomFloat(2, 10000, 50000),
+            'base_price_3' => $faker->randomFloat(2, 10000, 50000),
+            'tax_rate' => 19.00, // Tasa de impuesto entre 0% y 25%
             'company_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
@@ -30,8 +32,10 @@ class ProductSeeder extends Seeder
         Product::create([
             'name' => 'Producto 2',
             'code' => strtoupper($faker->lexify('???-???')),
-            'base_price' => $faker->randomFloat(2, 10000, 50000), 
-            'tax_rate' => $faker->randomFloat(2, 0, 19), 
+            'base_price_1' => $faker->randomFloat(2, 10000, 50000),
+            'base_price_2' => $faker->randomFloat(2, 10000, 50000),
+            'base_price_3' => $faker->randomFloat(2, 10000, 50000),
+            'tax_rate' => 19.00, 
             'company_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
@@ -40,8 +44,10 @@ class ProductSeeder extends Seeder
         Product::create([
             'name' => 'Producto 3',
             'code' => strtoupper($faker->lexify('???-???')),
-            'base_price' => $faker->randomFloat(2, 10000, 50000), 
-            'tax_rate' => $faker->randomFloat(2, 0, 19), 
+            'base_price_1' => $faker->randomFloat(2, 10000, 50000),
+            'base_price_2' => $faker->randomFloat(2, 10000, 50000),
+            'base_price_3' => $faker->randomFloat(2, 10000, 50000),
+            'tax_rate' => 19.00, 
             'company_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
@@ -50,8 +56,10 @@ class ProductSeeder extends Seeder
         Product::create([
             'name' => 'Producto 4',
             'code' => strtoupper($faker->lexify('???-???')),
-            'base_price' => $faker->randomFloat(2, 10000, 50000), 
-            'tax_rate' => $faker->randomFloat(2, 0, 19), 
+            'base_price_1' => $faker->randomFloat(2, 10000, 50000),
+            'base_price_2' => $faker->randomFloat(2, 10000, 50000),
+            'base_price_3' => $faker->randomFloat(2, 10000, 50000), 
+            'tax_rate' => 19.00, 
             'company_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
@@ -60,8 +68,10 @@ class ProductSeeder extends Seeder
         Product::create([
             'name' => 'Producto 5',
             'code' => strtoupper($faker->lexify('???-???')),
-            'base_price' => $faker->randomFloat(2, 10000, 50000), 
-            'tax_rate' => $faker->randomFloat(2, 0, 19), 
+            'base_price_1' => $faker->randomFloat(2, 10000, 50000),
+            'base_price_2' => $faker->randomFloat(2, 10000, 50000),
+            'base_price_3' => $faker->randomFloat(2, 10000, 50000), 
+            'tax_rate' => 19.00, 
             'company_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),

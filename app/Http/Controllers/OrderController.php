@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\CustomerDetail;
 use App\Models\Order;
 use App\Models\Product;
@@ -291,6 +292,7 @@ class OrderController extends Controller
                         'code' => $product->code,
                         'base_price_selected' => $product->pivot->price_final,
                         'tax_rate' => $product->tax_rate,
+                        'total_price' => $product->pivot->price_final * (1 + $product->tax_rate / 100),
                         'company_id' => $product->company_id,
                         'quantity' => $product->pivot->quantity,
                     ];
@@ -312,6 +314,15 @@ class OrderController extends Controller
         // Actualizar el estado de la orden
         $order->update(['status' => 'facturado']);
         return response()->json(['message' => 'Estado de la orden actualizado']);
+    }
+
+    public function showInvoice($id){
+        $order = Order::with('products', 'user')->findOrFail($id);
+        $company = Company::findOrFail($order->user->company_id);
+        $customer = CustomerDetail::findOrFail($order->customer_id);
+        $order->company_details = $company;
+        $order->customer_details = $customer;    
+        return view('orders.invoice', compact('order'));
     }
 
 

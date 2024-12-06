@@ -7,18 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
-{   
-    private $user;
-
-    public function __construct()
-    {
-        $this->user = Auth::user();
-    }
+{
     public function createProducts($products)
     {
         foreach ($products as $product) {
             // Busca el producto por código
-            $existingProduct = Product::where('code', $product['code'])->first();
+            $existingProduct = Product::where('code', $product['code'])
+                ->where('company_id', $product['company_id'])
+                ->first();
 
             if ($existingProduct) {
                 // Actualiza el producto existente
@@ -49,8 +45,9 @@ class ProductController extends Controller
     }
 
     public function getProducts()
-    {
-        $products = Product::all()->where('company_id', $this->user->company_id);
+    {   
+        $user = Auth::user();
+        $products = Product::all()->where('company_id', $user->company_id);
         return response()->json($products);
     }
 
@@ -79,14 +76,15 @@ class ProductController extends Controller
     public function searchProducts(Request $request)
     {
         $query = $request->input('query');
+        $user = Auth::user();
 
-        $products = Product::where('company_id', $this->user->company_id) // Filtrar por la empresa del usuario
+        $products = Product::where('company_id', $user->company_id) // Filtrar por la empresa del usuario
             ->where(function ($q) use ($query) { // Agrupar condiciones de búsqueda
                 $q->where('name', 'LIKE', "%{$query}%")
-                  ->orWhere('code', 'LIKE', "%{$query}%");
+                    ->orWhere('code', 'LIKE', "%{$query}%");
             })
             ->get();
-    
+
         return response()->json($products);
     }
 }

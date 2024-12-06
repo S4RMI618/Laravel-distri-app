@@ -99,6 +99,8 @@
                     </div>
 
                     <div class="flex items-center justify-center gap-4 mt-6">
+                        <a href="{{ route('orders.edit', $order->id) }}" class="text-white bg-blue-600 hover:bg-blue-900 hover:scale-110 duration-300 ease-in-out p-1 px-3 rounded-md"
+                            class="text-blue-600 hover:text-blue-900">Editar</a>
                         <a href="{{ route('orders.index') }}" class="text-white bg-blue-600 hover:bg-blue-900 hover:scale-110 duration-300 ease-in-out p-1 px-3 rounded-md">
                             Volver a Órdenes
                         </a>

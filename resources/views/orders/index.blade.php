@@ -83,8 +83,8 @@
                                         <td
                                             class="px-6 py-4 whitespace-nowrap text-sm font-medium flex justify-center gap-2">
 
-                                            <a href="{{ route('orders.edit', $order->id) }}"
-                                                class="text-blue-600 hover:text-blue-900">Editar</a>
+                                            {{-- <a href="{{ route('orders.edit', $order->id) }}"
+                                                class="text-blue-600 hover:text-blue-900">Editar</a> --}}
                                             <form action="{{ route('orders.destroy', $order->id) }}" method="POST"
                                                 style="display:inline;">
                                                 @csrf
@@ -92,6 +92,9 @@
                                                 <button type="submit"
                                                     class="text-red-600 hover:text-red-900">Eliminar</button>
                                             </form>
+                                            <a href="{{ route('orders.invoice', $order->id) }}"
+                                                class="btn btn-primary">Ver factura</a>
+
                                         </td>
                                     </tr>
                                 @endforeach

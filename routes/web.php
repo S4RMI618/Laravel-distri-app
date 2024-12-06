@@ -31,6 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class)->middleware([RoleMiddleware::class]);
     Route::resource('customer-details', CustomerDetailController::class);
     Route::resource('orders', OrderController::class);
+    Route::get('api/products/get', [ProductController::class, 'getProducts']);
+    Route::get('/orders/{id}/invoice', [OrderController::class, 'showInvoice'])->name('orders.invoice');
+
 });
 
 /* ------------------------------------------ Rutas consumo API --------------------------------------*/

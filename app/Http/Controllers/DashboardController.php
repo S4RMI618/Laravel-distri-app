@@ -30,7 +30,6 @@ class DashboardController extends Controller
                                        ->where('status', 'pendiente')
                                        ->count();
         }
-    
         return view('dashboard', compact('user', 'customerCount', 'productCount', 'pendingOrdersCount'));
     }
 }

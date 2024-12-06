@@ -16,10 +16,9 @@ use App\Http\Controllers\ProductController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
 /* PRODUCTS */
 Route::post('/products/store', [ProductController::class, 'store']);
-Route::get('/products/get', [ProductController::class, 'getProducts']);
+/* Route::get('/products/get', [ProductController::class, 'getProducts']); */
 
 /* CUSTOMERS */
 Route::post('customer-details/create-customers', [CustomerDetailController::class, 'storeCustomers']);
